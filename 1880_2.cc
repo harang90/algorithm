@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -7,21 +8,22 @@ int solution(vector<vector<int>> land) {
 	int row_num = land.size();
 	int col_num = 4;
 
-	// 최초값
-	vector<int> old_max;
+	vector<int> old_max(col_num, 0);
 	for (int i = 0; i < col_num; i++) {
-		oldLast.push_back(land[0][i]);
+		old_max[i] = land[0][i];
 	}
-	// 전 step에서 온 값 + 자신값 = max
-
-	// print land[n-1][]
-
 	for (int i = 1; i < row_num; i++) {
-		vector<int> new_max;
+		vector<int> new_max(col_num, 0);
+		for (int j = 0; j < col_num; j++) {
+			int total_max = 0;
+			for (int k = 0; k < col_num; k++) {
+				if ((k != j) && (total_max < old_max[k])) total_max = old_max[k];
+			}			
+			new_max[j] = total_max + land[i][j];
+		}
+		old_max = new_max;
 	}
-	std::max();
-
-	return;
+	return *std::max_element(old_max.begin(), old_max.end());
 }
 
 int main() {
