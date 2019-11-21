@@ -4,7 +4,7 @@
 
 using namespace std;
 
-bool compare(int a, int b) {
+bool compare(const int & a, const int & b) {
 	return (a < b);
 }
 
@@ -16,7 +16,7 @@ int solution(vector<int> priorities, int location) {
 		if (*iter == *std::max_element(priorities.begin(), priorities.end(), compare)) {
 			answer++;
 			*iter = 0;
-			if (iter - priorities.begin() == location) {
+			if (std::distance(priorities.begin(), iter) == location) {
 				break;
 			}
 		}
@@ -27,7 +27,7 @@ int solution(vector<int> priorities, int location) {
 }
 
 int main() {
-	int location = 2;
+	int location = 0;
 	vector<int> priorities{1, 1, 9, 1, 1, 1};
 	std::cout << solution(priorities, location) << std::endl;
 }
