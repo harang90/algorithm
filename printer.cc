@@ -1,3 +1,6 @@
+// 프로그래머스
+// 프린터
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
