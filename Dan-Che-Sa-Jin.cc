@@ -1,5 +1,6 @@
 // [프로그래머스] 단체사진
 
+#include <cstdlib>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,8 +12,9 @@ int solution(int n, vector<string> data) {
     int answer = 0;
 		vector<char> line{'A', 'C', 'F', 'J', 'M', 'N', 'R', 'T'};
 		vector<char>::iterator lineIter, lineIterTwo;
+		bool tracker;
 		do {
-			bool tracker = false;
+			tracker = false;
 			for (int i = 0; i < n; i++) {
 				const char* rule = data[i].c_str();
 				const char from = rule[0];
@@ -24,21 +26,18 @@ int solution(int n, vector<string> data) {
 						for (lineIterTwo = line.begin(); lineIterTwo != line.end(); lineIterTwo++) {
 							if (*lineIterTwo == to) break;
 						}
-						int calcDis = std::abs(std::distance(lineIter, lineIterTwo));
+						int calcDis = std::abs(lineIter - lineIterTwo) - 1;
 						if (exp == '=') { // 거리가 같음 
 							if (calcDis != dis) {
 								tracker = true;
-								break;
 							}
-						} else if (exp == '>') { // 거리가 미만
+						} else if (exp == '>') { // 거리가 더 크기 원함
 							if (calcDis <= dis) {
 								tracker = true;
-								break;
 							}
-						} else { // 거리가 초과
+						} else { // 거리가 더 작기 원함
 							if (calcDis >= dis) {
 								tracker = true;
-								break;
 							}
 						}
 						break;
@@ -55,8 +54,8 @@ int main () {
 	int T;
 	int n;
 
-	std::freopen("input.txt", "r", stdin);
-	std::cin >> T;
+//	std::freopen("input.txt", "r", stdin);
+//	std::cin >> T;
 	std::vector<string> data;
 	T = 1;
 	for (int i = 0; i < T; i++) {
@@ -73,6 +72,7 @@ int main () {
 		//~
 		//>, =, <
 		//0 ~ 6
+		n = 2;
 		data.push_back("N~F=0");
 		data.push_back("R~T>2");
 
