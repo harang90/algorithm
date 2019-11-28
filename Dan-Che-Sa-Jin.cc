@@ -20,7 +20,7 @@ int solution(int n, vector<string> data) {
 				const char from = rule[0];
 				const char to = rule[2];
 				const char exp = rule[3];
-				const char dis = rule[4];
+				const char dis = atoi(&rule[4]);
 				for (lineIter = line.begin(); lineIter != line.end(); lineIter++) {
 					if (*lineIter == from) {
 						for (lineIterTwo = line.begin(); lineIterTwo != line.end(); lineIterTwo++) {
@@ -53,29 +53,22 @@ int solution(int n, vector<string> data) {
 int main () {
 	int T;
 	int n;
+	std::string line;
 
-//	std::freopen("input.txt", "r", stdin);
-//	std::cin >> T;
+	std::freopen("input.txt", "r", stdin);
+	std::cin >> T;
 	std::vector<string> data;
-	T = 1;
 	for (int i = 0; i < T; i++) {
-//		std::cin >> n;
-//		std::string line;	
-//		std::getline(std::cin, line);
-//		
-		//TODO
-		//라인을 어찌어찌하여 백터로 만들고 등등
-
-		//TEMP
-		//1 <= n <= 100
-		//{A, C, F, J, M, N, R, T}
-		//~
-		//>, =, <
-		//0 ~ 6
-		n = 2;
-		data.push_back("N~F=0");
-		data.push_back("R~T>2");
-
+		std::cin >> n;
+		for (int j = 0; j < n; j++) {
+			std::cin >> line;
+			if (j == 0) {
+				line.erase(0, 1);
+			}
+			line.erase(line.end()-1);
+			data.push_back(line);
+		}
 		std::cout << solution(n, data) << std::endl;
+		data.clear();
 	}
 }
