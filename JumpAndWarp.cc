@@ -7,19 +7,32 @@
 
 using namespace std;
 
+vector<int> gMin;
+
 int getMin(int n) {
-	if (n == 1) return 1;
-	if (n == 2) return 1;
+	if (gMin[n] != 0) return gMin[n];
 	if (n % 2 == 0) {
-		return getMin(n/2) < (getMin(n-1) + 1) ? getMin(n/2) : (getMin(n-1) + 1);
+		if (getMin(n/2) < (getMin(n-1) + 1)) {
+			gMin[n] = getMin(n/2);
+		} else {
+			gMin[n] = getMin(n-1) + 1;
+		}
 	} else {
-		return getMin(n-1) + 1;
+		gMin[n] = getMin(n-1) + 1;
 	}
+	return gMin[n];
 }
 
 int solution(int n) {
     int answer = 0;
+		gMin.reserve(n);
+		for (int i = 0; i < n; i++) {
+			gMin[i] = 0;
+		}
+		gMin[1] = 1;
+		gMin[2] = 1;
 		answer = getMin(n);	
+		gMin.clear();
     return answer;
 }
 
