@@ -25,8 +25,8 @@ int getMin(int n) {
 
 int solution(int n) {
     int answer = 0;
-		gMin.reserve(n);
-		for (int i = 0; i < n; i++) {
+		gMin.reserve(n+1);
+		for (int i = 1; i <= n; i++) {
 			gMin[i] = 0;
 		}
 		gMin[1] = 1;
