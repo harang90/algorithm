@@ -1,5 +1,6 @@
 
 #include <string>
+#include <cstring>
 #include <iostream>
 #include <vector>
 #include <sstream>
@@ -13,41 +14,54 @@ int solution(string word, vector<string> pages) {
 	vector<int> matchingScores;
 	vector<int> linkScores;
 	vector<int> stdScores;
-	vector<int> linkNum;
+	vector<int> linkNums;
+
+	// 1. word to lower
+	std::transform(word.begin(), word.end(), word.begin(), [](unsigned char c){ return std::tolower(c); });
 
 	for (int i = 0; i < pages.size(); i++) {
 
 		stringstream ss;
-		ss.str(pages[i]);
+		std::string wordRead;
+		std::string stdScore{0};
 
+		ss.str(pages[i]);
 		//parse head
 		while (!ss.eof()) {
-			std::string word;
-			ss >> word;
-
-			if (word.find("content=\"") != std::string::npos) {
+			ss >> wordRead;
+			if (wordRead.find("content=\"") != std::string::npos) {
 				// TODO. pos_1 \" 만으로 되는지 확인 필요
-				int pos_1 = word.find("\"");
-				int pos_2 = word.find("\">");
-				word = word.substr(strlen("content=\""), pos_2 - pos_1);
-				pageNames.push_back(word);
+				int pos_1 = wordRead.find("\"");
+				int pos_2 = wordRead.find("\"/>");
+				wordRead = wordRead.substr(strlen("content=\""), pos_2 - 1 - pos_1);
+				pageNames.push_back(wordRead);
 				break;
 			}
 		}
 
 		//parse body
+		vector<string> linkedPages;
 		while (!ss.eof()) {
-			std::string word;
-			ss >> word;
+			ss >> wordRead;
 
 			//process links
-			if (word.find("href=\"") != std::string::npos) {
+			if (wordRead.find("href=\"") != std::string::npos) {
+				int pos_1 = wordRead.find("\"");
+				int pos_2 = wordRead.find("\">");
+				wordRead = wordRead.substr(strlen("href=\""), pos_2 - 1 - pos_1);
+//				if (std::find(linkedPages.begin(), linkedPages.end(), word) == linkedPages.end()) linkedPages.push_back(word);
+				linkedPages.push_back(wordRead);
+			} else {
+				// wordRead to lower	
+				// find
+				// find if valid
+				// stdScore++;
+				std::transform(wordRead.begin(), wordRead.end(), wordRead.begin(), [](unsigned char c){ return std::tolower(c); });
+				if (wordRead.find(word) != );
 			}
 		}
-		std::vector<string> links;
-
-		//pageNames.push_back();
-		//scores.push_back();
+		linkNums.push_back(linkedPages.size());
+		stdScores.push_back(stdScore);
 	}	
 	//answer = min_element();
 	return answer;
