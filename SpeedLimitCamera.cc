@@ -5,14 +5,19 @@
 using namespace std;
 
 int solution(vector<vector<int>> routes) {
+	//trial 1 
+
 	// max를 구한다
 	// max를 포함하는 routes를 제한다
 	// routes가 0이 되면 return;
 
+	// trial 2
+
+	// 순서대로 하나 뽑는다
+	// 좌우 중 가장 많은 곳 한곳 고른다.
+	// 겹치는 곳은 지운다.
+
 	int answer{0};
-	int max;
-	int max_i;
-	int max_j;
 	int num;
 	for (int k = 0; k < routes.size(); k++) {
 		if (routes[k][0] > routes[k][1]) {
@@ -20,29 +25,23 @@ int solution(vector<vector<int>> routes) {
 		}
 	}
 	while (routes.size()) {
-		max = 0;
-		max_i = -1;
-		max_j = -1;
-		for (int i = 0; i < routes.size(); i++) {
-			for (int j = 0; j < 2; j++) {
-				num = 0;
-				for (int k = 0; k < routes.size(); k++) {
-					if ((routes[k][0] <= routes[i][j]) && (routes[i][j] <= routes[k][1])) {
-						num++;
-					}
-				}
-				if (num >= max) {
-					max = num;
-					max_i = i;
-					max_j = j;
+		vector<int> list[2];
+		int num[2]{0,0};
+		for (int k = 0; k < routes.size(); k++) {
+			for (int i = 0; i < 2; i++) {
+				if (routes[k][0] <= routes[0][i] && routes[0][i] <= routes[k][1]) {
+					list[i].push_back(k);
+					num[i]++;
 				}
 			}
 		}
-		int standard = routes[max_i][max_j];
-		for (int k = 0; k < routes.size(); k++) {
-			if ((routes[k][0] <= standard) && (standard <= routes[k][1])) {
-				routes.erase(routes.begin() + k);
-				k--;
+		if (num[0] > num[1]) {
+			for (int i = 0; list[0].size(); i++) {
+				routes.erase(routes.begin() + list[0][i]);
+			}
+		} else {
+			for (int i = 0; list[1].size(); i++) {
+				routes.erase(routes.begin() + list[1][i]);
 			}
 		}
 		answer++;
