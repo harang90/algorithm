@@ -14,6 +14,11 @@ int solution(vector<vector<int>> routes) {
 	int max_i;
 	int max_j;
 	int num;
+	for (int k = 0; k < routes.size(); k++) {
+		if (routes[k][0] > routes[k][1]) {
+			std::swap(routes[k][0], routes[k][1]);
+		}
+	}
 	while (routes.size()) {
 		max = 0;
 		max_i = -1;
@@ -26,15 +31,16 @@ int solution(vector<vector<int>> routes) {
 						num++;
 					}
 				}
-				if (num > max) {
+				if (num >= max) {
 					max = num;
 					max_i = i;
 					max_j = j;
 				}
 			}
 		}
+		int standard = routes[max_i][max_j];
 		for (int k = 0; k < routes.size(); k++) {
-			if ((routes[k][0] <= routes[max_i][max_j]) && (routes[max_i][max_j] <= routes[k][1])) {
+			if ((routes[k][0] <= standard) && (standard <= routes[k][1])) {
 				routes.erase(routes.begin() + k);
 				k--;
 			}
