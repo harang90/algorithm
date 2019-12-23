@@ -29,22 +29,22 @@ int solution(vector<vector<int>> routes) {
 		int num[2]{0,0};
 		for (int k = 0; k < routes.size(); k++) {
 			for (int i = 0; i < 2; i++) {
-				if (routes[k][0] <= routes[0][i] && routes[0][i] <= routes[k][1]) {
+				if ((routes[k][0] <= routes[0][i]) && (routes[0][i] <= routes[k][1])) {
 					list[i].push_back(k);
 					num[i]++;
 				}
 			}
 		}
-		if (num[0] > num[1]) {
-			for (int i = 0; list[0].size(); i++) {
+		if (num[0] >= num[1]) {
+			for (int i = list[0].size() - 1; i >= 0; i--) {
 				routes.erase(routes.begin() + list[0][i]);
 			}
 		} else {
-			for (int i = 0; list[1].size(); i++) {
+			for (int i = list[1].size() - 1; i >= 0; i--) {
 				routes.erase(routes.begin() + list[1][i]);
 			}
 		}
-		answer++;
+		if ((num[0] >= 2) || (num[1] >= 2)) answer++;
 	}
 	return answer;
 }
