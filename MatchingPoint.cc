@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -23,7 +24,7 @@ int solution(string word, vector<string> pages) {
 
 		stringstream ss;
 		std::string wordRead;
-		std::string stdScore{0};
+		int stdScore{0};
 
 		ss.str(pages[i]);
 		//parse head
@@ -57,7 +58,22 @@ int solution(string word, vector<string> pages) {
 				// find if valid
 				// stdScore++;
 				std::transform(wordRead.begin(), wordRead.end(), wordRead.begin(), [](unsigned char c){ return std::tolower(c); });
-				if (wordRead.find(word) != );
+				std::size_t pos = wordRead.find(word);
+				if (pos != std::string::npos) {
+					if (wordRead.length() != word.length()) {
+						if ((pos -1) >= 0) {
+							if ((wordRead[pos-1]] >= 'a') && (wordRead[pos-1] <= 'z')) {
+								continue;
+							}
+						}
+						if ((wordRead.length() -1) >= (pos + word.length())) {
+							if((wordRead[pos+word.length()] >= 'a') && (wordRead[pos+word.length] <= 'z')) {
+								continue;
+							}
+						}
+					}
+					stdScore++;
+				}
 			}
 		}
 		linkNums.push_back(linkedPages.size());
