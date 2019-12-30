@@ -5,6 +5,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <iomanip>
 
 using namespace std;
 
@@ -12,10 +13,12 @@ int solution(string word, vector<string> pages) {
 	int answer = 0;
 	int pageNum = pages.size();
 	vector<string> pageNames;
-	vector<int> matchingScores;
+	vector<float> matchingScores;
 	vector<int> linkScores;
 	vector<int> stdScores;
 	vector<int> linkNums;
+	vector<float> linkScoresToOther;
+	vector<vector<string>> linkedPagesList;
 
 	// 1. word to lower
 	std::transform(word.begin(), word.end(), word.begin(), [](unsigned char c){ return std::tolower(c); });
@@ -62,12 +65,12 @@ int solution(string word, vector<string> pages) {
 				if (pos != std::string::npos) {
 					if (wordRead.length() != word.length()) {
 						if ((pos -1) >= 0) {
-							if ((wordRead[pos-1]] >= 'a') && (wordRead[pos-1] <= 'z')) {
+							if ((wordRead[pos-1] >= 'a') && (wordRead[pos-1] <= 'z')) {
 								continue;
 							}
 						}
 						if ((wordRead.length() -1) >= (pos + word.length())) {
-							if((wordRead[pos+word.length()] >= 'a') && (wordRead[pos+word.length] <= 'z')) {
+							if((wordRead[pos+word.length()] >= 'a') && (wordRead[pos+word.length()] <= 'z')) {
 								continue;
 							}
 						}
@@ -76,10 +79,29 @@ int solution(string word, vector<string> pages) {
 				}
 			}
 		}
+		linkedPagesList.push_back(linkedPages);
+		linkScoresToOther.push_back(static_cast<float>(stdScore) / static_cast<float>(linkedPages.size()));
 		linkNums.push_back(linkedPages.size());
 		stdScores.push_back(stdScore);
 	}	
-	//answer = min_element();
+//	for (int i = 0; i < stdScores.size(); i++) {
+//		std::cout << i << " PAGE의 기본 점수: " << stdScores[i] << ". " << i << "의 외부 링크 수: "<< linkNums[i] << std::endl;
+//		std::cout << i << " PAGE의 다른 이에게 점수: " << linkScoresToOther[i] << std::endl;
+//	}
+	for (int i = 0; i < pages.size(); i++) {
+		float finalScore{0};	
+		finalScore += stdScores[i];
+		for (int j = 0; j < pages.size(); j++) {
+			if (j != i) {
+				if (std::find(linkedPagesList[j].begin(), linkedPagesList[j].end(), pageNames[i]) != linkedPagesList[j].end()) finalScore += linkScoresToOther[j];
+			}
+		}
+		matchingScores.push_back(finalScore);
+	}
+//	for (int i = 0; i < pages.size(); i++) {
+//		std::cout << i << " PAGE의 매칭 점수: " << matchingScores[i] << std::endl;
+//	}
+	answer = std::distance(matchingScores.begin(), std::max_element(matchingScores.begin(), matchingScores.end()));
 	return answer;
 }
 
