@@ -10,7 +10,19 @@ using namespace std;
 int solution(vector<int> A, vector<int> B) {
 	int answer = 0;
 	std::sort(A.begin(), A.end());
-	//std::sort();
+	std::sort(B.begin(), B.end());
+	vector<int>::iterator B_iter = B.begin();
+	for (vector<int>::iterator iter = A.begin(); iter != A.end(); iter++) {
+		while (B_iter != B.end()) {
+			if (*B_iter >= *iter) {
+				answer++;
+				B_iter++;
+				break;
+			}
+			B_iter++;
+		}
+		if (B_iter == B.end()) break;
+	}
 	return answer;
 }
 
