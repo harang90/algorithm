@@ -24,8 +24,10 @@ vector<int> solution(vector<string> operations) {
 		} else {
 			if (num == 1) {
 				if (!maxHeap.empty())	maxHeap.pop();
+				if (maxHeap.empty()) minHeap = priority_queue<int, vector<int>, greater<int>>();
 			} else {
 				if (!minHeap.empty()) minHeap.pop();
+				if (minHeap.empty()) maxHeap = priority_queue<int>();
 			}
 		}
 	}
@@ -60,7 +62,9 @@ vector<int> solution(vector<string> operations) {
 
 int main() {
 	//vector<string> operations{"I 16","D 1"};	
-	vector<string> operations{"I 7","I 5","I -5","D -1"};	
+	//vector<string> operations{"I 7","I 5","I -5","D -1"};	
+	//vector<string> operations{"I 16", "I -5643", "D -1", "D 1", "D 1", "I 123", "D -1"};
+	vector<string> operations{"I 4", "I 3", "I 2", "I 1", "D 1", "D 1", "D -1", "D -1", "I 5", "I 6"};
 	vector<int> answer{solution(operations)};
 	cout << answer[0] << endl;
 	cout << answer[1] << endl;
