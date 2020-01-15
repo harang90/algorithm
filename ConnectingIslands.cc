@@ -1,9 +1,21 @@
 #include <vector>
 #include <iostream>
+#include <algorithm>
+
+using namespace std;
 
 int solution(int n, vector<vector<int>> costs) {
 	int answer{0};
 	vector<int> pushedIsland;
+
+	sort(costs.begin(), costs.end(), [](const vector<int> & a, const vector<int> & b) {
+			return a->at(2) < b->at(2);
+	});
+
+	for (auto iter = costs.begin(); iter != costs.end(); iter++) {
+
+	}
+
 	// 1. lowest branch
 	//   1-1. from AND to 를 기록
 	// 	 1-2. branch 추가
