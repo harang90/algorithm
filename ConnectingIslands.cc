@@ -6,16 +6,16 @@ using namespace std;
 
 int solution(int n, vector<vector<int>> costs) {
 	int answer{0};
-	vector<int> pushedIsland;
-
+	bool* boolList{new bool[n]};
 	sort(costs.begin(), costs.end(), [](const vector<int> & a, const vector<int> & b) {
-			return a->at(2) < b->at(2);
+		return a->at(2) < b->at(2);
 	});
-
 	for (auto iter = costs.begin(); iter != costs.end(); iter++) {
-
+		int from = iter->at(0);		
+		int to = iter->at(1);
+		if ((boolList[from] == true) && (boolList[to] == true)) {
+		}
 	}
-
 	// 1. lowest branch
 	//   1-1. from AND to 를 기록
 	// 	 1-2. branch 추가
