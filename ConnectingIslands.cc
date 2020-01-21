@@ -4,23 +4,29 @@
 
 using namespace std;
 
-int solution(int n, vector<vector<int>> costs) {
+int solution(int n, vector<vector<int> > costs) {
 	int answer{0};
-	bool* boolList{new bool[n]};
+	bool* boolList{new bool[n]()};
 	sort(costs.begin(), costs.end(), [](const vector<int> & a, const vector<int> & b) {
-		return a->at(2) < b->at(2);
+		return a.at(2) < b.at(2);
 	});
 	for (auto iter = costs.begin(); iter != costs.end(); iter++) {
 		int from = iter->at(0);		
 		int to = iter->at(1);
 		if ((boolList[from] == true) && (boolList[to] == true)) {
+			continue;
+		} else {
+			if (boolList[from] == true) {
+				boolList[to] = true;
+			} else if (boolList[to] == true) {
+				boolList[from] = true;
+			} else {
+				boolList[from] = true;
+				boolList[to] = true;
+			}
+			answer += iter->at(2);
 		}
 	}
-	// 1. lowest branch
-	//   1-1. from AND to 를 기록
-	// 	 1-2. branch 추가
-	// 2. 그 다음 lowest branch
-	// 	 2-1. 연결된 islands 중 연결되는 것 있는지 판단 / 하지만 다른 연결되는 얘는 list에 없어야함
 	return answer;
 }
 
