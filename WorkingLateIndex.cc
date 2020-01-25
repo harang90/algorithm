@@ -12,11 +12,11 @@ long long solution(int n, vector<int> works) {
 		if ((iter+1 == works.end()) && (*iter > 0)) {
 			*iter -= 1;
 			n--;
-			iter = works.begin();
-		} else if (*iter >= (*(iter+1)) && (*iter > 0)) {
+			if (iter != works.begin()) iter--;
+		} else if (*iter > (*(iter+1)) && (*iter > 0)) {
 			*iter -= 1;
 			n--;
-			iter = works.begin();
+			if (iter != works.begin()) iter--;
 		} else if ((*iter == 0) && (iter + 1 == works.end())) {
 			break;
 		} else {
@@ -31,7 +31,7 @@ long long solution(int n, vector<int> works) {
 }
 
 int main() {
-	int n = n;
+	int n = 4;
 	vector<int> works{4,3,3};
 	cout << solution(n, works) << endl;
 }
