@@ -43,12 +43,23 @@ int main() {
 	int N;
 	cin >> N;
 	visited = new bool*[N];
+
+	// get string
 	for (int i = 0; i < N; i++) {
 		string in;
 		cin >> in;
 		map.push_back(in);
 		visited[i] = new bool[N]();
 	}
+
+	// 접근 방식 (DFS)
+	// 1. Depth를 사용해서 연결되는 칸들의 수를 구함
+	// 	- 주위에 1이 있다면 해당 칸으로 가고 Depth는 1 증가한다
+	// 	- 주위에 1이 없다면 최종 Depth를 반환한다
+	// 2. Visited를 두어 그룹을 나누는데 사용함
+	//	- 최상단에서 보았을 때 이미 이전 그룹에 속한 칸들은 이미 visit 했기 때문에 visited 안한 칸을 만났을 때는 새로운 그룹이라고 봐도 좋다
+
+	// dfs (recursive)
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			if (map[i][j] == '1' && visited[i][j] == 0) {
