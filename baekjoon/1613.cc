@@ -10,7 +10,8 @@ char map[6][12];
 
 vector<pair<int,int>>& findNeighbor(vector<pair<int,int>>& pairs, int i, int j) {
 	visited[i][j] = true;
-	pairs.push_back(make_pair(i,j));
+	pair<int,int> elem = make_pair(i,j);
+	pairs.push_back(elem);
 	char color = map[i][j];
 	//up
 	if ( (i-1) >= 0) {
@@ -54,7 +55,7 @@ int main() {
 		bool connected = false;
 		for (int j = 0; j < 6; j++) {
 			for (int i = 0; i < 12; i++) {
-				if (visited[j][i] == false) {
+				if (visited[j][i] == false && map[j][i] != '.') {
 					vector<pair<int, int>> connectedPairs;
 					connectedPairs = findNeighbor(connectedPairs, j, i);
 					if (connectedPairs.size() >= 4) {
@@ -68,22 +69,29 @@ int main() {
 		}
 		if (connected) ans++;
 		else break;
+		//cout << "BEFORE ==========================" << endl;
+		for (int j = 0; j < 6; j++) {
+			for (int i = 0; i < 12; i++) {
+				//cout << map[j][i];
+			}
+			//cout << endl;
+		}
 		for (int j = 0; j < 6; j++) {
 			for (int i = 0; i < 11; i++) {
-				visited[j][i] = 0;
 				if (map[j][i+1] == '.') {
 					memcpy(&map[j][1], &map[j][0], i+1);
 					map[j][0] = '.';
-					i++;
 				}
 			}
 		}
-	}
-	for (int j = 0; j < 6; j++) {
-		for (int i = 0; i < 12; i++) {
-			cout << map[j][i];
+		//cout << "AFTER ==========================" << endl;
+		for (int j = 0; j < 6; j++) {
+			for (int i = 0; i < 12; i++) {
+				//cout << map[j][i];
+				visited[j][i] = 0;
+			}
+			//cout << endl;
 		}
-		cout << endl;
 	}
 	cout << ans << endl;
 	return 0;
